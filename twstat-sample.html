@@ -1,0 +1,261 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Twitter Charts</title>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.3/jqcloud-1.0.3.min.js"></script>
+
+  <style type="text/css">
+    body {
+      background-color: #ffffff; 
+      color: #000000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.3/jqcloud.css" />
+  
+  <script type="text/javascript">
+      /*jslint white: true, browser: true */
+
+      function draw_by_month(month_data, month_min, month_max) {
+	  "use strict";
+
+          // Create and populate the data table.
+          var data = new google.visualization.DataTable();
+          data.addColumn('date', 'Month');
+          data.addColumn('number', 'Count');
+          data.addRows(month_data);
+
+          // Create and draw the visualization.
+          new google.visualization.ColumnChart(document.getElementById('by_month')).draw(data,
+              {
+                  title : "Tweets by Month",
+                  width : 1200, 
+                  height : 400,
+                  legend: {
+                      position: 'none'
+                  },
+                  hAxis: {
+                      gridlines: { 
+                          color: 'transparent'
+                      },
+                      title: "Month", 
+                      viewWindowMode: 'explicit', viewWindow: {
+                          max: month_max, min: month_min
+                      }
+                  }
+              }
+          );
+      }
+
+      function draw_by_dow(dow_data, chart_title, elemid) {
+	  "use strict";
+
+          // Create and populate the data table.
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Day of Week');
+          data.addColumn('number', 'Count');
+          data.addRows(dow_data);
+
+          // Create and draw the visualization.
+          new google.visualization.ColumnChart(document.getElementById(elemid)).draw(data,
+              {
+                  title : chart_title,
+                  width : 600, 
+                  height : 400,
+                  legend: {position: 'none'},
+                  hAxis: {
+                      title: "Day of Week", 
+                      gridlines:{ color: 'transparent'}
+                  }
+              }
+          );
+      }
+
+      function draw_by_hour(hour_data, chart_title, elemid) {
+	  "use strict";
+
+          // Create and populate the data table.
+          var data = new google.visualization.DataTable();
+          data.addColumn('number', 'Hour');
+          data.addColumn('number', 'Count');
+          data.addRows(hour_data);
+
+          // Create and draw the visualization.
+          new google.visualization.ColumnChart(document.getElementById(elemid)).draw(data,
+              {
+                  title : chart_title,
+                  width : 600, 
+                  height : 400,
+                  legend: {position: 'none'},
+                  hAxis: {
+                      baselineColor: 'transparent',
+                      title: 'Hour',
+                      gridlines:{ color: 'transparent'},
+                      viewWindowMode: 'explicit', viewWindow: {
+                          max: 23.5, min: -0.5
+                      }
+                  }
+              }
+          );
+      }
+
+      function draw_by_mention(mention_data, chart_title, elemid) {
+	  "use strict";
+
+          // Create and populate the data table.
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'User');
+          data.addColumn('number', 'Count');
+          data.addRows(mention_data);
+
+          // Create and draw the visualization.
+          new google.visualization.BarChart(document.getElementById(elemid)).draw(data,
+              {
+                  title : chart_title,
+                  width : 600, 
+                  height : 400,
+                  legend: {position: 'none'},
+                  hAxis: {
+                      viewWindowMode: 'explicit', viewWindow: {
+                          min: 0
+                      }
+                  }
+              }
+          );
+      }
+
+      function cloud_by_words(words_data, elemid) {
+	  "use strict";
+          $("#" + elemid).jQCloud(words_data);
+      }
+
+      function drawCharts() {
+	  "use strict";
+
+          draw_by_month(
+              [ [new Date(2007, 1), 146],[new Date(2007, 2), 628],[new Date(2007, 3), 725],[new Date(2007, 4), 714],[new Date(2007, 5), 825],[new Date(2007, 6), 709],[new Date(2007, 7), 813],[new Date(2007, 8), 998],[new Date(2007, 9), 928],[new Date(2007, 10), 807],[new Date(2007, 11), 539],[new Date(2008, 0), 953],[new Date(2008, 1), 840],[new Date(2008, 2), 1149],[new Date(2008, 3), 1629],[new Date(2008, 4), 1649],[new Date(2008, 5), 987],[new Date(2008, 6), 1304],[new Date(2008, 7), 1047],[new Date(2008, 8), 964],[new Date(2008, 9), 1084],[new Date(2008, 10), 828],[new Date(2008, 11), 437],[new Date(2009, 0), 1202],[new Date(2009, 1), 1353],[new Date(2009, 2), 1141],[new Date(2009, 3), 896],[new Date(2009, 4), 855],[new Date(2009, 5), 796],[new Date(2009, 6), 827],[new Date(2009, 7), 789],[new Date(2009, 8), 719],[new Date(2009, 9), 618],[new Date(2009, 10), 720],[new Date(2009, 11), 1045],[new Date(2010, 0), 596],[new Date(2010, 1), 885],[new Date(2010, 2), 693],[new Date(2010, 3), 476],[new Date(2010, 4), 691],[new Date(2010, 5), 823],[new Date(2010, 6), 1129],[new Date(2010, 7), 1038],[new Date(2010, 8), 978],[new Date(2010, 9), 1105],[new Date(2010, 10), 1307],[new Date(2010, 11), 1168],[new Date(2011, 0), 1493],[new Date(2011, 1), 1855],[new Date(2011, 2), 1736],[new Date(2011, 3), 1627],[new Date(2011, 4), 1395],[new Date(2011, 5), 1568],[new Date(2011, 6), 1350],[new Date(2011, 7), 1619],[new Date(2011, 8), 1638],[new Date(2011, 9), 1621],[new Date(2011, 10), 2096],[new Date(2011, 11), 1855],[new Date(2012, 0), 1710],[new Date(2012, 1), 1600],[new Date(2012, 2), 1799],[new Date(2012, 3), 1688],[new Date(2012, 4), 1760],[new Date(2012, 5), 1613],[new Date(2012, 6), 1813],[new Date(2012, 7), 1357],[new Date(2012, 8), 1401],[new Date(2012, 9), 1689],[new Date(2012, 10), 1731],[new Date(2012, 11), 1336],[new Date(2013, 0), 1613],[new Date(2013, 1), 1260],[new Date(2013, 2), 409] ], 
+              new Date(2007,0,15), 
+              new Date(2013,2,15)
+          );
+
+          draw_by_dow(
+              [ ['Sun', 7511],['Mon', 12792],['Tue', 13727],['Wed', 14670],['Thu', 14501],['Fri', 14348],['Sat', 7636] ],
+              "Tweets by Day of Week (all time)",
+              "by_dow_alltime"
+          );
+          draw_by_dow(
+              [ ['Sun', 152],['Mon', 238],['Tue', 197],['Wed', 234],['Thu', 211],['Fri', 217],['Sat', 63] ],
+              "Tweets by Day of Week (last 30 days)",
+              "by_dow_last30"
+          );
+
+          draw_by_hour(
+              [ [0, 7723],[1, 6997],[2, 4692],[3, 1840],[4, 382],[5, 77],[6, 73],[7, 284],[8, 1437],[9, 2879],[10, 4257],[11, 3762],[12, 4151],[13, 4400],[14, 3562],[15, 3300],[16, 3087],[17, 3556],[18, 2588],[19, 3385],[20, 4725],[21, 5375],[22, 6016],[23, 6637] ],
+              "Tweets by Hour (all time)",
+              "by_hour_alltime"
+          );
+          draw_by_hour(
+              [ [0, 103],[1, 61],[2, 28],[3, 4],[4, 0],[5, 0],[6, 0],[7, 6],[8, 48],[9, 57],[10, 55],[11, 50],[12, 56],[13, 78],[14, 81],[15, 58],[16, 45],[17, 41],[18, 40],[19, 73],[20, 111],[21, 97],[22, 97],[23, 123] ],
+              "Tweets by Hour (last 30 days)",
+              "by_hour_last30"
+          );
+
+          draw_by_mention(
+              [ [ '@having', 2750 ],[ '@myen', 1953 ],[ '@thebadcop', 716 ],[ '@linnetwoods', 572 ],[ '@jackalopejess', 522 ],[ '@wildfox34', 493 ],[ '@blaiddwolfe', 473 ],[ '@shusune', 422 ],[ '@tb5918', 411 ],[ '@prinplup14', 390 ] ],
+              "Top Mentions (all time)",
+              "by_mention_alltime"
+          );
+          draw_by_mention(
+              [ [ '@having', 40 ],[ '@anthroguy101', 16 ],[ '@cacheadvance', 16 ],[ '@rukario71', 14 ],[ '@jackalopejess', 13 ],[ '@zolfox', 13 ],[ '@pippin', 13 ],[ '@prinplup14', 12 ],[ '@spazzfox', 12 ],[ '@rav_bunneh', 11 ] ],
+              "Top Mentions (last 30 days)",
+              "by_mention_last30"
+          );
+
+          draw_by_mention(
+              [ [ 'TwitVim', 38841 ],[ 'web', 12461 ],[ 'Tweetbot for Mac', 7441 ],[ 'Instantbird', 5245 ],[ 'im', 5172 ],[ 'Twitter for Mac', 4019 ],[ 'FriendFeed', 2355 ],[ 'twicca', 1953 ],[ 'txt', 1538 ],[ 'Seesmic', 1298 ] ],
+              "Top Clients (all time)",
+              "by_source_alltime"
+          );
+          draw_by_mention(
+              [ [ 'Tweetbot for Mac', 1160 ],[ 'Instagram', 60 ],[ 'txt', 28 ],[ 'twicca', 19 ],[ 'Falcon Pro', 19 ],[ 'FalconPro', 17 ],[ 'TwitVim', 7 ],[ 'OS X', 1 ],[ 'Carbon for Android', 1 ] ],
+              "Top Clients (last 30 days)",
+              "by_source_last30"
+          );
+
+      }
+
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawCharts);
+      $(document).ready(function() {
+	  "use strict";
+
+          cloud_by_words(
+              [ {text: "goodnight", weight: 9196 },{text: "good", weight: 7114 },{text: "it's", weight: 5070 },{text: "morning", weight: 4139 },{text: "just", weight: 4084 },{text: "i'm", weight: 3744 },{text: "having", weight: 3525 },{text: "don't", weight: 2783 },{text: "too", weight: 2665 },{text: "that's", weight: 2465 },{text: "still", weight: 2284 },{text: "only", weight: 2265 },{text: "because", weight: 2139 },{text: "twitter", weight: 2134 },{text: "livejournal", weight: 2125 },{text: "new", weight: 2114 },{text: "well", weight: 2022 },{text: "got", weight: 1974 },{text: "myen", weight: 1954 },{text: "why", weight: 1890 },{text: "back", weight: 1852 },{text: "think", weight: 1825 },{text: "night", weight: 1695 },{text: "i've", weight: 1668 },{text: "i'll", weight: 1638 },{text: "those", weight: 1579 },{text: "home", weight: 1555 },{text: "going", weight: 1533 },{text: "after", weight: 1509 },{text: "photos", weight: 1503 },{text: "work", weight: 1409 },{text: "yes", weight: 1376 },{text: "already", weight: 1333 },{text: "didn't", weight: 1333 },{text: "logging", weight: 1315 },{text: "okay", weight: 1300 },{text: "gas", weight: 1256 },{text: "also", weight: 1254 },{text: "even", weight: 1252 },{text: "postcrossing", weight: 1248 },{text: "before", weight: 1236 },{text: "google", weight: 1165 },{text: "twitpic", weight: 1156 },{text: "should", weight: 1151 },{text: "know", weight: 1140 },{text: "geocaches", weight: 1138 },{text: "much", weight: 1133 },{text: "there's", weight: 1112 },{text: "off", weight: 1102 },{text: "catching", weight: 1097 },{text: "posting", weight: 1081 },{text: "can't", weight: 1066 },{text: "geocaching", weight: 1061 },{text: "prices", weight: 1055 },{text: "last", weight: 1050 },{text: "dinner", weight: 1033 },{text: "any", weight: 1022 },{text: "never", weight: 1012 },{text: "flickr", weight: 1010 },{text: "bit", weight: 995 },{text: "again", weight: 985 },{text: "chicken", weight: 980 },{text: "found", weight: 978 },{text: "need", weight: 958 },{text: "doesn't", weight: 956 },{text: "today", weight: 947 },{text: "haven't", weight: 943 },{text: "guess", weight: 940 },{text: "probably", weight: 939 },{text: "another", weight: 936 },{text: "free", weight: 933 },{text: "over", weight: 933 },{text: "maybe", weight: 926 },{text: "evening", weight: 908 },{text: "yet", weight: 903 },{text: "really", weight: 899 },{text: "few", weight: 896 },{text: "using", weight: 895 },{text: "doing", weight: 887 },{text: "george", weight: 885 },{text: "card", weight: 883 },{text: "yeah", weight: 876 },{text: "though", weight: 865 },{text: "wonder", weight: 864 },{text: "where's", weight: 860 },{text: "something", weight: 841 },{text: "actually", weight: 840 },{text: "breakfast", weight: 834 },{text: "getting", weight: 829 },{text: "lot", weight: 825 },{text: "while", weight: 820 },{text: "birthday", weight: 802 },{text: "geocache", weight: 796 },{text: "here", weight: 774 },{text: "phone", weight: 769 },{text: "sure", weight: 769 },{text: "year", weight: 764 },{text: "writing", weight: 757 },{text: "happy", weight: 752 },{text: "since", weight: 749 } ],
+              "by_words_alltime"
+          );
+          cloud_by_words(
+              [ {text: "goodnight", weight: 162 },{text: "good", weight: 128 },{text: "it's", weight: 107 },{text: "just", weight: 94 },{text: "morning", weight: 93 },{text: "too", weight: 62 },{text: "i'm", weight: 58 },{text: "that's", weight: 55 },{text: "having", weight: 48 },{text: "those", weight: 40 },{text: "don't", weight: 40 },{text: "still", weight: 38 },{text: "well", weight: 37 },{text: "even", weight: 35 },{text: "because", weight: 34 },{text: "think", weight: 31 },{text: "only", weight: 31 },{text: "yes", weight: 30 },{text: "twitter", weight: 29 },{text: "why", weight: 29 },{text: "got", weight: 29 },{text: "probably", weight: 29 },{text: "i've", weight: 28 },{text: "after", weight: 28 },{text: "didn't", weight: 24 },{text: "new", weight: 23 },{text: "any", weight: 23 },{text: "dinner", weight: 23 },{text: "going", weight: 23 },{text: "hardee's", weight: 23 },{text: "actually", weight: 23 },{text: "back", weight: 22 },{text: "chocolate", weight: 22 },{text: "okay", weight: 22 },{text: "coffee", weight: 22 },{text: "work", weight: 21 },{text: "last", weight: 21 },{text: "guess", weight: 21 },{text: "birthday", weight: 21 },{text: "happy", weight: 21 },{text: "though", weight: 20 },{text: "milk", weight: 20 },{text: "either", weight: 19 },{text: "also", weight: 19 },{text: "evening", weight: 19 },{text: "skim", weight: 19 },{text: "bacon", weight: 18 },{text: "really", weight: 18 },{text: "app", weight: 18 },{text: "need", weight: 18 },{text: "i'll", weight: 18 },{text: "much", weight: 18 },{text: "never", weight: 18 },{text: "free", weight: 18 },{text: "looks", weight: 18 },{text: "maybe", weight: 17 },{text: "geocaches", weight: 17 },{text: "oranges", weight: 17 },{text: "pizza", weight: 17 },{text: "doing", weight: 17 },{text: "wonder", weight: 17 },{text: "bit", weight: 17 },{text: "store", weight: 17 },{text: "truffle", weight: 17 },{text: "houtte", weight: 16 },{text: "lot", weight: 16 },{text: "should", weight: 16 },{text: "since", weight: 16 },{text: "raspberry", weight: 16 },{text: "van", weight: 16 },{text: "home", weight: 16 },{text: "haven't", weight: 16 },{text: "here", weight: 16 },{text: "sure", weight: 16 },{text: "ohbother", weight: 16 },{text: "anthroguy101", weight: 16 },{text: "2013", weight: 16 },{text: "doesn't", weight: 16 },{text: "cacheadvance", weight: 16 },{text: "there's", weight: 16 },{text: "over", weight: 16 },{text: "friday's", weight: 16 },{text: "year", weight: 15 },{text: "using", weight: 15 },{text: "gqotd", weight: 15 },{text: "coupon", weight: 15 },{text: "chicken", weight: 15 },{text: "while", weight: 15 },{text: "already", weight: 15 },{text: "folks", weight: 15 },{text: "used", weight: 15 },{text: "every", weight: 15 },{text: "very", weight: 15 },{text: "night", weight: 14 },{text: "rukario71", weight: 14 },{text: "can't", weight: 14 },{text: "geocaching", weight: 14 },{text: "today", weight: 14 },{text: "better", weight: 14 },{text: "another", weight: 14 } ],
+              "by_words_last30"
+          );
+      });
+  </script>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <td colspan="2">
+        <div id="by_month"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="by_dow_alltime"></div>
+      </td>
+      <td>
+        <div id="by_dow_last30"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="by_hour_alltime"></div>
+      </td>
+      <td>
+        <div id="by_hour_last30"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="by_mention_alltime"></div>
+      </td>
+      <td>
+        <div id="by_mention_last30"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="by_source_alltime"></div>
+      </td>
+      <td>
+        <div id="by_source_last30"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="by_words_alltime" style="width: 600px; height: 400px;"></div>
+        <p style="font-weight: bold; text-align: center;">Words (all time)</p>
+      </td>
+      <td>
+        <div id="by_words_last30" style="width: 600px; height: 400px;"></div>
+        <p style="font-weight: bold; text-align: center;">Words (last 30 days)</p>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
+
